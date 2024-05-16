@@ -1,11 +1,12 @@
 <template>
-  <div class="category" :style="{ backgroundImage: `url('${category.image}')` }" >
-    <router-link to="#" class="category__title" :style="{ color: category.text_color }" >{{ category.name }}</router-link>
+  <div class="category" :style="{ backgroundImage: `url('${category.image}')` }">
+    <router-link to="#" class="category__title" :style="{ color: category.text_color }">{{
+      category.name
+    }}</router-link>
   </div>
 </template>
 
 <script>
-
 export default {
   name: 'CategoryCard',
   props: {
@@ -25,11 +26,15 @@ export default {
   background-size: cover;
   background-position: center;
   border-radius: 5px;
+  transition: opacity 0.3s;
 }
-.category__title{
-font-size: 24px;
-line-height: 28px;
-font-weight: bold;
-text-decoration: none;
+.category__title {
+  font-size: 24px;
+  line-height: 28px;
+  font-weight: bold;
+  text-decoration: none;
+}
+.category:hover {
+  opacity: 0.7;
 }
 </style>

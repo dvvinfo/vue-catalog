@@ -1,50 +1,62 @@
 <script>
-import axios from 'axios';
-import CategoryCard from '@/components/CategoryCard.vue';
+import axios from 'axios'
+import CategoryCard from '@/components/CategoryCard.vue'
+import AppLoader from '@/components/AppLoader.vue'
 
 export default {
   name: 'HomeView',
   components: {
-    CategoryCard
+    CategoryCard,
+    AppLoader
   },
   data() {
     return {
-      categories: []
-    };
+      categories: [],
+      isLoading: true,
+      error: false
+    }
   },
   mounted() {
-    this.fetchCategories();
+    this.fetchCategories()
   },
   methods: {
     async fetchCategories() {
       try {
-        const cityId = 1; // default city id
-        const response = await axios.get(`https://nlstar.com/ru/api/catalog3/v1/menutags/?city_id=${cityId}`);
-        console.log(response.data);
-        this.categories = response.data.tags;
+        this.isLoading = true
+        const cityId = 1 // default city id
+        const response = await axios.get(
+          `https://nlstar.com/ru/api/catalog3/v1/menutags/?city_id=${cityId}`
+        )
+        console.log(response.data)
+        this.categories = response.data.tags
+        this.isLoading = false
+        this.error = false
       } catch (error) {
-        console.error('Error fetching categories:', error);
+        this.error = true
+        console.error('Error fetching categories:', error)
+      } finally {
+        this.isLoading = false
       }
     }
   }
 }
-
-
 </script>
 
 <template>
   <div class="page">
-   <h1 class="title">Категории товаров</h1>
-   <div class="categories">
-    <CategoryCard v-for="category in categories" :key="category.slug" :category="category"/>
-   </div>
+    <h1 class="title">Категории товаров</h1>
+    <AppLoader v-if="isLoading" />
+    <p class="error" v-else-if="error">Произошла ошибка при загрузке категорий</p>
+    <div class="categories" v-else>
+      <CategoryCard v-for="category in categories" :key="category.slug" :category="category" />
+    </div>
   </div>
 </template>
 <style scoped>
-.title{
+.title {
   font-size: 44px;
-line-height: 44px;
-font-weight: bold;
+  line-height: 44px;
+  font-weight: bold;
 }
 .categories {
   display: grid;
@@ -52,5 +64,13 @@ font-weight: bold;
   gap: 22px;
   margin-top: 20px;
   justify-content: center;
+}
+.error {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--gray);
+  width: 100%;
+  text-align: center;
+  margin-top: 30px;
 }
 </style>
