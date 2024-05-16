@@ -1,0 +1,55 @@
+@import './base.css';
+
+
+@font-face {
+  font-family: 'Futura PT';
+  src: url('../assets/fonts/FuturaPT-Book.eot');
+  src: local('Futura PT Book'), local('FuturaPT-Book'),
+      url('../assets/fonts/FuturaPT-Book.eot?#iefix') format('embedded-opentype'),
+      url('../assets/fonts/FuturaPT-Book.woff') format('woff'),
+      url('../assets/fonts/FuturaPT-Book.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Futura PT';
+  src: url('../assets/fonts/FuturaPT-Medium.eot');
+  src: local('Futura PT Medium'), local('FuturaPT-Medium'),
+      url('../assets/fonts/FuturaPT-Medium.eot?#iefix') format('embedded-opentype'),
+      url('../assets/fonts/FuturaPT-Medium.woff') format('woff'),
+      url('../assets/fonts/FuturaPT-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Futura PT';
+  src: url('../assets/fonts/FuturaPT-Bold.eot');
+  src: local('Futura PT Bold'), local('FuturaPT-Bold'),
+      url('../assets/fonts/FuturaPT-Bold.eot?#iefix') format('embedded-opentype'),
+      url('../assets/fonts/FuturaPT-Bold.woff') format('woff'),
+      url('../assets/fonts/FuturaPT-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  font-weight: normal;
+}
+
+body {
+  color: var(--color-text-black);
+  background: var(--color-background);
+  line-height: normal;
+  font-family: 'Futura PT',sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+

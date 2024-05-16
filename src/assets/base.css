@@ -1,0 +1,22 @@
+/* color palette from <https://github.com/vuejs/theme> */
+:root {
+  --white: hsla(0, 0%, 100%, 1);
+  --white-light: hsla(0, 0%, 97%, 1);
+
+  --linear-gradient: linear-gradient(270deg, #ffa800 0%, #ff6f00 100%);
+
+  --black: hsla(0, 0%, 15%, 1);
+  --black-light: hsla(237, 14%, 24%, 1);
+  --gray: hsla(0, 0%, 59%, 1);
+}
+
+/* semantic color variables for this project */
+:root {
+  --color-background: var(--white-light);
+  --color-background-overlay: var(--black-bg);
+  --color-background-linear-gradient: var(--linear-gradient);
+
+  --color-text-white: var(--white);
+  --color-text-black: var(--black);
+  --color-text-gray: var(--gray);
+}
