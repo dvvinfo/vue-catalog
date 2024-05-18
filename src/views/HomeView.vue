@@ -47,17 +47,16 @@ export default {
     <h1 class="title">Категории товаров</h1>
     <AppLoader v-if="isLoading" />
     <p class="error" v-else-if="error">Произошла ошибка при загрузке категорий</p>
+    
     <div class="categories" v-else>
-      <CategoryCard v-for="category in categories" :key="category.slug" :category="category" />
+      <router-link class="category-link" v-for="category in categories" :key="category.slug" :to="{ name: 'CategoryView', params: { slug: category.slug } }">
+      <CategoryCard  :category="category"  />
+    </router-link>
     </div>
   </div>
 </template>
+
 <style scoped>
-.title {
-  font-size: 44px;
-  line-height: 44px;
-  font-weight: bold;
-}
 .categories {
   display: grid;
   grid-template-columns: repeat(auto-fit, 271px);
@@ -72,5 +71,8 @@ export default {
   width: 100%;
   text-align: center;
   margin-top: 30px;
+}
+.category-link{
+  text-decoration: none;
 }
 </style>

@@ -10,6 +10,7 @@
   --gray: hsla(0, 0%, 59%, 1);
   --gray-light:hsla(0, 0%, 59%, 0.5);
   --gray-dark:  hsla(0, 0%, 68%, 1);
+  --gray-dark-light:  hsla(210, 29%, 93%, 1);
 }
 
 /* semantic color variables for this project */
@@ -18,6 +19,7 @@
   --color-background-overlay: var(--black-bg);
   --color-background-linear-gradient: var(--linear-gradient);
   --color-border-input: var(--gray-light);
+  --color-line: var(--gray-dark-light);
 
   --color-text-white: var(--white);
   --color-text-black: var(--black);

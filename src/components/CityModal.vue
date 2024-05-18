@@ -1,10 +1,12 @@
 <script>
 import axios from 'axios'
 import AppLoader from '@/components/AppLoader.vue'
+import CustomButton from '@/components/CustomButton.vue';
 export default {
   name: 'CityModal',
   components: {
-    AppLoader
+    AppLoader,
+    CustomButton
   },
   data() {
     return {
@@ -39,8 +41,7 @@ export default {
     selectCity(city) {
       console.log('Selected city:', city)
       this.selectedCity = city
-      this.searchTerm = city.city
-      this.cities = []
+      this.searchTerm = city.label 
       localStorage.setItem('selectedCity', JSON.stringify(city))
     },
 
@@ -114,7 +115,13 @@ export default {
           </ul>
         </template>
 
-        <button class="button" @click="closeModal" :disabled="!selectedCity">Подтвердить</button>
+        <CustomButton 
+          @click="closeModal"
+          :disabled="!selectedCity"
+          fontSize="16px"
+        >
+          Подтвердить
+        </CustomButton>
       </div>
     </div>
   </div>
@@ -158,7 +165,7 @@ export default {
   cursor: pointer;
 }
 .modal-body {
-  margin: 12px;
+  margin-top: 12px;
   display: flex;
   align-items: center;
   gap: 18px;
@@ -188,10 +195,10 @@ export default {
   padding: 0;
   margin: 0;
   position: absolute;
-  bottom: -122px;
+  bottom: -134px;
   z-index: 3;
   background-color: #fff;
-  max-width: 522px;
+  max-width: 540px;
   width: 100%;
   height: 170px;
   overflow-y: auto;
@@ -207,20 +214,23 @@ export default {
 }
 
 .button {
-  padding: 13px 24px;
-  background-color: transparent;
-  color: var(--color-text-button);
-  border: 2px solid var(--color-border-input);
+  padding: 13px 20px;
+  background: var(--color-background-linear-gradient);
+  color: var(--color-text-white);
+  border: none;
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
   line-height: 21px;
   letter-spacing: 1.75px;
   border-radius: 24px;
+  text-transform: uppercase;
 }
 
 .button:disabled {
-  opacity: 0.5;
+  background: var( --color-background);
+  color: var(--color-text-button);
+  border: 2px solid var(--color-border-input);
   cursor: not-allowed;
 }
 .error {

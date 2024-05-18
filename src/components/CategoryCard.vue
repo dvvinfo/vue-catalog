@@ -1,8 +1,8 @@
 <template>
   <div class="category" :style="{ backgroundImage: `url('${category.image}')` }">
-    <router-link to="#" class="category__title" :style="{ color: category.text_color }">{{
+    <h3  class="category__title" :style="{ color: category.text_color }">{{
       category.name
-    }}</router-link>
+    }}</h3>
   </div>
 </template>
 
