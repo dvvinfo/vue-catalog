@@ -43,13 +43,12 @@ export default {
     closeCityModal() {
       this.showCityModal = false
     },
-    // Add a helper function to update selectedCity
+
     updateSelectedCity(city) {
       this.selectedCity = city
     }
   },
   watch: {
-    // Watch for changes in localStorage and update selectedCity
     $data: {
       handler() {
         const city = localStorage.getItem('selectedCity')

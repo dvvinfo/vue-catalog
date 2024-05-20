@@ -1,7 +1,7 @@
 <script>
 import axios from 'axios'
 import AppLoader from '@/components/AppLoader.vue'
-import CustomButton from '@/components/CustomButton.vue';
+import CustomButton from '@/components/CustomButton.vue'
 export default {
   name: 'CityModal',
   components: {
@@ -26,6 +26,7 @@ export default {
             `https://nlstar.com/api/catalog3/v1/city/?term=${this.searchTerm}&country=ru`
           )
           this.cities = response.data
+          console.log(response.data)
           this.isLoading = false
           this.error = false
         } catch (error) {
@@ -41,12 +42,16 @@ export default {
     selectCity(city) {
       console.log('Selected city:', city)
       this.selectedCity = city
-      this.searchTerm = city.label 
+      this.searchTerm = city.label
       localStorage.setItem('selectedCity', JSON.stringify(city))
+      localStorage.setItem('selectedCityId', JSON.stringify({ id: city.id }))
     },
 
     closeModal() {
       this.$emit('close')
+    },
+    reloadPage() {
+      location.reload()
     },
     clearSearch() {
       this.searchTerm = ''
@@ -103,7 +108,7 @@ export default {
           </button>
         </div>
 
-        <div class="error" v-if="error">Произошла ошибка при поиске городов"></div>
+        <div class="error" v-if="error">Произошла ошибка при поиске городов</div>
         <div class="cities" v-else-if="isLoading">
           <AppLoader />
         </div>
@@ -115,11 +120,7 @@ export default {
           </ul>
         </template>
 
-        <CustomButton 
-          @click="closeModal"
-          :disabled="!selectedCity"
-          fontSize="16px"
-        >
+        <CustomButton @click="reloadPage" :disabled="!selectedCity" fontSize="16px">
           Подтвердить
         </CustomButton>
       </div>
@@ -138,6 +139,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 99;
 }
 
 .modal-content {
@@ -205,7 +207,7 @@ export default {
   border: 1px solid var(--color-border-input);
   padding: 12px 0;
 }
-.cities::-webkit-scrollbar{
+.cities::-webkit-scrollbar {
   width: 0;
 }
 .city {
@@ -228,7 +230,7 @@ export default {
 }
 
 .button:disabled {
-  background: var( --color-background);
+  background: var(--color-background);
   color: var(--color-text-button);
   border: 2px solid var(--color-border-input);
   cursor: not-allowed;
@@ -237,6 +239,14 @@ export default {
   margin-top: 10px;
   text-align: center;
   font-size: 16px;
+  position: absolute;
+  bottom: 5px;
+  color: red;
 }
-
+@media (max-width: 769px) {
+  .cities {
+    max-width: none;
+    width: auto;
+  }
+}
 </style>

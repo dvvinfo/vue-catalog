@@ -13,7 +13,7 @@ export default {
   },
   data() {
     return {
-      cityId: 1,
+      cityId: null,
       categorySlug: this.$route.params.slug,
       subcategorySlug: this.$route.params.subcategorySlug || null,
       categoryName: '',
@@ -110,10 +110,30 @@ export default {
     },
     toggleSidebar() {
       this.isSidebar = !this.isSidebar
+    },
+
+    onStorageChange(event) {
+      if (event.key === 'selectedCityId') {
+        this.cityId = JSON.parse(event.newValue).id
+      }
     }
   },
   created() {
+    // Инициализация cityId из локального хранилища
+    const storedCityId = localStorage.getItem('selectedCityId')
+    if (storedCityId) {
+      this.cityId = JSON.parse(storedCityId).id
+    } else {
+      this.cityId = 1 
+    }
+
     this.fetchCategories()
+
+    window.addEventListener('storage', this.onStorageChange)
+  },
+
+  beforeMount() {
+    window.removeEventListener('storage', this.onStorageChange)
   }
 }
 </script>
@@ -164,9 +184,10 @@ export default {
         @select-subcategory="selectSubcategory"
       />
       <div class="page__content">
-        <div class="products">
+        <div class="products" v-if="products.length">
           <ProductCard v-for="product in products" :key="product.id" :product="product" />
         </div>
+        <div class="info" v-else>Товары не найдены</div>
       </div>
     </div>
   </div>
@@ -200,6 +221,12 @@ export default {
 }
 .burger {
   display: none;
+}
+.info {
+  text-align: center;
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: 500;
 }
 @media (max-width: 1150px) {
   .burger {

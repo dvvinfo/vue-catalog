@@ -13,19 +13,47 @@ export default {
     return {
       categories: [],
       isLoading: true,
-      error: false
+      error: false,
+      cityId: 1 
     }
   },
   mounted() {
+    this.initializeCityId()
     this.fetchCategories()
   },
   methods: {
+    initializeCityId() {
+      const storedCity = localStorage.getItem('selectedCityId')
+      if (storedCity) {
+        try {
+          const parsedCity = JSON.parse(storedCity)
+          this.cityId = parsedCity.id ? parseInt(parsedCity.id, 10) : 1
+        } catch (error) {
+          console.error('Error parsing stored city id:', error)
+          this.cityId = 1
+        }
+      }
+    },
+    onStorageChange(event) {
+      if (event.key === 'selectedCityId') {
+        if (event.newValue) {
+          try {
+            const parsedCity = JSON.parse(event.newValue)
+            this.cityId = parsedCity.id ? parseInt(parsedCity.id, 10) : 1
+          } catch (error) {
+            console.error('Error parsing stored city id:', error)
+            this.cityId = 1
+          }
+        } else {
+          this.cityId = 1
+        }
+      }
+    },
     async fetchCategories() {
       try {
         this.isLoading = true
-        const cityId = 1 // default city id
         const response = await axios.get(
-          `https://nlstar.com/ru/api/catalog3/v1/menutags/?city_id=${cityId}`
+          `https://nlstar.com/ru/api/catalog3/v1/menutags/?city_id=${this.cityId}`
         )
         console.log(response.data)
         this.categories = response.data.tags
@@ -38,7 +66,18 @@ export default {
         this.isLoading = false
       }
     }
+  },
+  watch: {
+    $data: {
+    handler() {
+      const cityId = localStorage.getItem('selectedCityId');
+      if (cityId) {
+        this.cityId = JSON.parse(cityId).id;
+      }
+    },
+    deep: false
   }
+  },
 }
 </script>
 
@@ -50,8 +89,8 @@ export default {
     
     <div class="categories" v-else>
       <router-link class="category-link" v-for="category in categories" :key="category.slug" :to="{ name: 'CategoryView', params: { slug: category.slug } }">
-      <CategoryCard  :category="category"  />
-    </router-link>
+        <CategoryCard :category="category" />
+      </router-link>
     </div>
   </div>
 </template>
@@ -72,7 +111,7 @@ export default {
   text-align: center;
   margin-top: 30px;
 }
-.category-link{
+.category-link {
   text-decoration: none;
 }
 </style>
